@@ -1,0 +1,40 @@
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+  - name: Tool Registry Files
+    image: harbor.siberyildiz.com/drone/drone-tool-settings
+    settings:
+      npm:
+        registry:
+          url: https://nexus.siberyildiz.com/repository/npm-public/
+
+  - name: lint
+    image: node:12-alpine
+    environment:
+      NODE_ENV: development
+    commands:
+      - npm ci
+      - npm run lint
+
+  - name: test
+    image: node:12-alpine
+    environment:
+      NODE_ENV: development
+    commands:
+      - npm test
+
+  - name: publish
+    image: banzaicloud/drone-kaniko
+    settings:
+      registry: harbor.siberyildiz.com
+      repo: drone/drone-tool-settings
+      auto_tag: true
+      username:
+        from_secret: HARBOR_USERNAME
+      password:
+        from_secret: HARBOR_PASSWORD
+    when:
+      event:
+        - tag
