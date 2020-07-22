@@ -6,25 +6,28 @@ const fs = require('fs');
 Sqrl.defaultConfig.autoEscape = false;
 
 function generateMavenSettings(settings) {
+    let outputPath = settings.filePath || path.join('.m2', 'settings.xml');
+
     if (process.env['UNIT_TEST'] !== 'true') {
-        console.log('Maven: Creating settings.xml file...');
+        console.log(`Maven: Creating ${outputPath} file...`);
     }
 
     let settingsTemplate = fs.readFileSync(path.join(__dirname, 'templates', 'maven', 'settings.xml'), 'utf8');
     let settingsFile = Sqrl.render(settingsTemplate, settings);
-    let outputPath = settings.filePath || path.join('.m2', 'settings.xml');
 
     ensureDirectoryExistence(outputPath);
     fs.writeFileSync(outputPath, settingsFile);
 
     if (process.env['UNIT_TEST'] !== 'true') {
-        console.log('Maven: The settings.xml file has been created');
+        console.log(`Maven: The ${outputPath} file has been created.`);
     }
 }
 
 function generateNpmSettings(settings) {
+    let outputPath = settings.filePath || path.join('.npmrc');
+
     if (process.env['UNIT_TEST'] !== 'true') {
-        console.log('Npm: Creating .npmrc file...');
+        console.log(`Npm: Creating ${outputPath} file...`);
     }
 
     settings.registry = fixUrl(settings.registry);
@@ -34,13 +37,12 @@ function generateNpmSettings(settings) {
 
     let settingsTemplate = fs.readFileSync(path.join(__dirname, 'templates', 'npm', '.npmrc'), 'utf8');
     let settingsFile = Sqrl.render(settingsTemplate, settings);
-    let outputPath = settings.filePath || path.join('.npmrc');
 
     ensureDirectoryExistence(outputPath);
     fs.writeFileSync(outputPath, settingsFile);
 
     if (process.env['UNIT_TEST'] !== 'true') {
-        console.log('Npm: The .npmrc file has been created');
+        console.log(`Npm: The ${outputPath} file has been created.`);
     }
 }
 

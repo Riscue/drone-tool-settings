@@ -108,8 +108,8 @@ describe('Maven: generator.js', function () {
                     getSettingsXML('')
                 );
                 assert.deepEqual(consoleOutput, [
-                    'Maven: Creating settings.xml file...',
-                    'Maven: The settings.xml file has been created'
+                    `Maven: Creating ${mavenSettingsPath} file...`,
+                    `Maven: The ${mavenSettingsPath} file has been created.`
                 ]);
             } finally {
                 restore();
@@ -247,8 +247,8 @@ describe('Npm: generator.js', function () {
                 generateSettings();
                 assert.strictEqual(readSettingsFile(npmSettingsPath), minify(''));
                 assert.deepEqual(consoleOutput, [
-                    'Npm: Creating .npmrc file...',
-                    'Npm: The .npmrc file has been created'
+                    `Npm: Creating ${npmSettingsPath} file...`,
+                    `Npm: The ${npmSettingsPath} file has been created.`
                 ]);
             } finally {
                 restore();
