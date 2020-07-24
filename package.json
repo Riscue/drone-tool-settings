@@ -1,0 +1,39 @@
+{
+  "name": "drone-tool-settings",
+  "version": "0.3.0",
+  "description": "A simple drone plugin that can generate a settings files for tools that needs registry",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "c8 -r lcovonly --all mocha"
+  },
+  "keywords": [
+    "drone",
+    "docker",
+    "plugin"
+  ],
+  "author": "Lukas Planz",
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+    "@types/node": "^13.9.8",
+    "c8": "^7.1.2",
+    "eslint": "^7.0.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.4",
+    "mocha": "^7.1.2",
+    "mocked-env": "^1.3.2"
+  },
+  "dependencies": {
+    "drone-env-parser": "^1.2.0",
+    "extend": "^3.0.2",
+    "squirrelly": "^8.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
+}

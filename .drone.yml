@@ -1,0 +1,31 @@
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+  - name: lint
+    image: node:12-alpine
+    environment:
+      NODE_ENV: development
+    commands:
+      - npm ci
+      - npm run lint
+
+  - name: test
+    image: node:12-alpine
+    environment:
+      NODE_ENV: development
+    commands:
+      - npm test
+
+  - name: publish
+    image: riscue/drone-img
+    settings:
+      auto_tag: true
+      username:
+        from_secret: DOCKER_USERNAME
+      password:
+        from_secret: DOCKER_PASSWORD
+    when:
+      event:
+        - tag
