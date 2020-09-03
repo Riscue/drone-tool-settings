@@ -1,0 +1,50 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: lint
+    image: node:12-alpine
+    environment:
+      NODE_ENV: development
+    commands:
+      - npm ci
+      - npm run lint
+
+  - name: test
+    image: node:12-alpine
+    environment:
+      NODE_ENV: development
+    commands:
+      - npm test
+
+  - name: publish
+    image: plugins/docker
+    settings:
+      repo: riscue/drone-tool-settings
+      auto_tag: true
+      username: riscue
+      password:
+        from_secret: DOCKER_PASSWORD
+    when:
+      event:
+        - tag
+
+  - name: notify
+    image: drillster/drone-email
+    settings:
+      host:
+        from_secret: SMTP_HOST
+      port:
+        from_secret: SMTP_PORT
+      from:
+        from_secret: SMTP_FROM
+      username:
+        from_secret: SMTP_USERNAME
+      password:
+        from_secret: SMTP_PASSWORD
+      skip_verify: true
+    when:
+      status:
+        - changed
+        - failure

@@ -1,0 +1,16 @@
+.git/
+.github/
+.idea/
+
+node_modules/
+test/
+coverage/
+
+.dockerignore
+.drone.yml
+.eslintrc
+.gitignore
+
+Dockerfile
+LICENSE
+README.md
