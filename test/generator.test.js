@@ -28,15 +28,15 @@ function getSettingsXML(content) {
     );
 }
 
-function readSettingsFile(path) {
-    return minify(fs.readFileSync(path, 'utf8'));
+function readSettingsFile(filePath) {
+    return minify(fs.readFileSync(filePath, 'utf8'));
 }
 
-function deleteSettingsFile(path) {
+function deleteSettingsFile(filePath) {
     try {
-        fs.unlinkSync(path);
+        fs.unlinkSync(filePath);
     } catch (e) {
-        console.error(`Could not delete settings file ${path}`);
+        console.error(`Could not delete settings file ${filePath}`);
     }
 }
 
