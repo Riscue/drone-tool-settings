@@ -15,7 +15,7 @@
   "author": "Lukas Planz",
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
-    "@types/node": "^13.9.8",
+    "@types/node": "^14.14.13",
     "c8": "^7.1.2",
     "eslint": "^7.0.0",
     "husky": "^4.2.5",
